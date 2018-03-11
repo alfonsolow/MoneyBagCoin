@@ -40,13 +40,13 @@ CTxMemPool mempool;
 map<uint256, CBlockIndex*> mapBlockIndex;
 set<pair<COutPoint, unsigned int> > setStakeSeen;
 
-CBigNum bnProofOfStakeLimit(~uint256(0) >> 20);
+CBigNum bnProofOfStakeLimit(~uint256(0) >> 10);
 CBigNum bnProofOfStakeLimitV2(~uint256(0) >> 34);
 
 unsigned int nStakeMinAge = 2 * 24 * 60 * 60; // 2 days
 unsigned int nModifierInterval = 10 * 60; // time to elapse before new modifier is computed
 
-int nCoinbaseMaturity = 20;  //20 blocks
+int nCoinbaseMaturity = 10;  //20 blocks
 CBlockIndex* pindexGenesisBlock = NULL;
 int nBestHeight = -1;
 
@@ -1143,7 +1143,7 @@ int64_t GetProofOfWorkReward(int64_t nFees, int nHeight)
         {
             nSubsidy = 25 * COIN;  
         }else{
-            nSubsidy = 50 * COIN; 
+            nSubsidy = 30 * COIN; 
         }
     }
     LogPrint("creation", "GetProofOfWorkReward() : create=%s nSubsidy=%d nHeight=%d\n", FormatMoney(nSubsidy), nSubsidy, nHeight);
@@ -1168,24 +1168,24 @@ int64_t GetProofOfStakeReward(int64_t nCoinAge, int64_t nFees, int nHeight)
        
        if(pindexBest->nHeight <= 20000)
         {
-            nSubsidy = 10 * COIN;
+            nSubsidy = 20 * COIN;
         }else if(pindexBest->nHeight <= 40000)
         {
             nSubsidy = 20 * COIN;
         }else if(pindexBest->nHeight <= 80000)
         {
-            nSubsidy = 40 * COIN;
+            nSubsidy = 25 * COIN;
         }else if(pindexBest->nHeight <= 110000)
         {
-            nSubsidy = 60 * COIN;
+            nSubsidy = 28 * COIN;
         }else if(pindexBest->nHeight <= 155000)
         {
-            nSubsidy = 80 * COIN;
+            nSubsidy = 30 * COIN;
         }else if(pindexBest->nHeight <= 250000)
         {
-            nSubsidy = 40 * COIN;
+            nSubsidy = 34 * COIN;
         }else{
-          nSubsidy = 20 * COIN;  
+          nSubsidy = 15 * COIN;  
         }
     }
 
@@ -4294,7 +4294,7 @@ bool SendMessages(CNode* pto, bool fSendTrickle)
 
 int64_t GetMasternodePayment(int nHeight, int64_t blockValue)
 {
-    int64_t ret = blockValue * 0.75; //75% for masternodes
+    int64_t ret = blockValue * 0.80; //75% for masternodes
 
     return ret;
 }
